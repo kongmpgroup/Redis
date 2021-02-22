@@ -62,10 +62,7 @@ def get_delete(Key):
     return jsonify(deleteBook)
 
 
-@app.route('/setname/<name>')
-def setname(name):
-    db.set('name',name)
-    return 'Name updated.'
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',port=80) 
