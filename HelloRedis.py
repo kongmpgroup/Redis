@@ -5,23 +5,23 @@ from flask import Flask ,request,jsonify
 
 app = Flask(__name__)
 db=redis.StrictRedis(
-    host='node9906-advweb-242.app.ruk-com.cloud'
-    ,port=11165
+    host='10.100.3.39'
+    ,port=6379
     ,password='CDNtyh07881'
     ,decode_responses=True)
 
 
-#show key ทั้งหมด
+#show all key
 @app.route('/',methods=['GET'])
-def Show_keys(): #ทำการสร้างฟัง ก์ชัน Show_keys
-    data=db.keys() #สร้าง data มาเก็บข้อมูลจาก db.key 
-    data.sort() #เรียงข้อมูล
-    req = [] #ประกาศตัวแปล array ชื่อ req 
-    for k in data : # สร้างลูป for เอาค่า k มาเก็บ
-        req.append(db.hgetall(k)) # db.hgetall แสดงค่าทั้งหมด จาก k แล้วทำการเรียงข้อมูลแบบ list มาเก็บไว้ที่ req
-    return jsonify(req) # ทำการสั่งค่ากลับ
+def Show_keys():
+    data=db.keys()  
+    data.sort()
+    req = []
+    for k in data :
+        req.append(db.hgetall(k))
+    return jsonify(req) 
 
-# Get Single Staff
+# Get Single book
 @app.route('/<Key>', methods=['GET'])
 def get_Book(Key):
     Book = db.hgetall(Key)
@@ -68,4 +68,4 @@ def setname(name):
     return 'Name updated.'
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',port=80) 
